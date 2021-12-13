@@ -76,9 +76,9 @@ List<QuestionModel> questionsAll = [
 //List<QuestionModel> listQuestion=[];
 
 var listQuestion=List<QuestionModel>.empty(growable: true);
-void getListQusetion(){
+void getListQusetion(String level){
   questionsAll.forEach((element) {
-    if(element.level==UserControler.getLevel()){
+    if(element.level== level){
 
       listQuestion.add(element);
 

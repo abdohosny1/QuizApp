@@ -17,6 +17,11 @@ class _MainMenuState extends State<MainMenu> {
 
   TextEditingController textControler=TextEditingController();
 
+  dispose(){
+    textControler.dispose();
+    super.dispose();
+  }
+
   String dropdownValue = 'Chose Level';
   var formKey=GlobalKey<FormState>();
   @override
@@ -59,7 +64,7 @@ class _MainMenuState extends State<MainMenu> {
                     filled: true,
                     fillColor: Color(0xFF1C2341),
                     hintText: "Full Name",
-                    hintStyle: TextStyle(color: Colors.white),
+                    hintStyle: TextStyle(color: kGrayColor),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(12)),
                     ),
@@ -102,11 +107,14 @@ class _MainMenuState extends State<MainMenu> {
                       //Navigating the the Quizz Screen
                       if(formKey.currentState!.validate()){
                         var user=User(name: textControler.text, level: dropdownValue, score: 0);
-                        UserControler.addUser(user);
+                        // UserControler.addUser(user);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => QuizzScreen(),
+                              builder: (context) => QuizzScreen(
+                                level: dropdownValue,
+                                name: textControler.text,
+                              ),
                             ));
                       }
 

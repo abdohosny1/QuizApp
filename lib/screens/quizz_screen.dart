@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:quiz_test/controler/user_controler.dart';
 import 'package:quiz_test/data/questions_example.dart';
+import 'package:quiz_test/model/user_model.dart';
 import 'package:quiz_test/screens/information_screen.dart';
 import 'package:quiz_test/screens/main_menu.dart';
 import 'package:quiz_test/screens/result_screen.dart';
@@ -11,7 +12,9 @@ import 'package:quiz_test/widgets/quizz_widget.dart';
 import 'package:quiz_test/model/question_model.dart';
 
 class QuizzScreen extends StatefulWidget {
-  const QuizzScreen({Key? key}) : super(key: key);
+  final String name;
+  final String level;
+  const QuizzScreen({Key? key, required this.name, required this.level}) : super(key: key);
 
   @override
   _QuizzScreenState createState() => _QuizzScreenState();
@@ -31,7 +34,7 @@ class _QuizzScreenState extends State<QuizzScreen> {
   void initState() {
     // TODO: implement initState
     startTimer();
-    getListQusetion();
+    getListQusetion(widget.level);
    // checkTimer();
     super.initState();
     _controller = PageController(initialPage: 0);
@@ -84,7 +87,7 @@ class _QuizzScreenState extends State<QuizzScreen> {
          context: context,
          builder: (context){
            return AlertDialog(
-             title: Text('Do you want finash quiez'),
+             title: Text('Do you want finish quiz ?'),
              actions: [
                FlatButton(
                    onPressed: (){
@@ -117,8 +120,8 @@ class _QuizzScreenState extends State<QuizzScreen> {
           children: [
             Text('Score  ${score *10} / ${listQuestion.length *10}'),
             IconButton(onPressed: (){
-              UserControler.updatUser(score);
-              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>InformationScreen()));
+              // UserControler.updatUser(score);
+              Navigator.of(context).push(MaterialPageRoute(builder: (context)=> InformationScreen()));
             }, icon: Icon(Icons.info_outlined))
           ],
         ),
@@ -234,6 +237,8 @@ class _QuizzScreenState extends State<QuizzScreen> {
                     RawMaterialButton(
                       onPressed: () {
                         if (_controller!.page?.toInt() == listQuestion.length - 1) {
+                          User user = User(name: widget.name, level: widget.level, score: score);
+                          Cache.addUser(user);
                           Navigator.push(
                               context,
                               MaterialPageRoute(

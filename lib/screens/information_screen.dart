@@ -18,7 +18,7 @@ class _InformationScreenState extends State<InformationScreen> {
     // TODO: implement initState
 
      // userControler.restorUser();
-    UserControler.LoadData();
+    // UserControler.LoadData();
 
     super.initState();
   }
@@ -43,7 +43,7 @@ class _InformationScreenState extends State<InformationScreen> {
       body: SizedBox(
         child:  ListView.separated(
             separatorBuilder: (context,index)=>Divider(thickness: 1,),
-            itemCount:UserControler.user.length,
+            itemCount:Cache.getUsers().length,
             itemBuilder: (context,index){
               // userControler.userListtwo[index].score=widget.score  ;
               return Padding(
@@ -51,9 +51,9 @@ class _InformationScreenState extends State<InformationScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('${UserControler.user[index].name}',style: TextStyle(color: Colors.white),),
-                    Text('${UserControler.user[index].level}',style: TextStyle(color: Colors.white),),
-                    Text('${UserControler.user[index].score *10}',style: TextStyle(color: Colors.white),),
+                    Text('${Cache.getUsers()[index].name}',style: TextStyle(color: Colors.white),),
+                    Text('${Cache.getUsers()[index].level}',style: TextStyle(color: Colors.white),),
+                    Text('${Cache.getUsers()[index].score *10}',style: TextStyle(color: Colors.white),),
                   ],),
               );
             }
